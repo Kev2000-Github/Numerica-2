@@ -10,7 +10,9 @@ function GaussSeidel(matrix, independentTerms, initialValues, tol)
     solutions = initialValues;
     errors = zeros(1,N);
     #sigue iterando hasta que el error relativo porcentual de todas las variables sean menor que el provisto
+    counter = 1;
     do
+      fprintf("============< Iteracion %d >=============\n", counter);
       for j=1:N
         xant = solutions(j);
         #obtiene la sumatoria ponderada de la fila exceptuando el de la variable a buscar
@@ -20,13 +22,21 @@ function GaussSeidel(matrix, independentTerms, initialValues, tol)
         sumatoria = sum(matrix(j,:).*solutions) - matrix(j,j)*solutions(j);
         xi = (independentTerms(j) - sumatoria)/matrix(j,j);
         solutions(j) = xi;
-        #Se calcula el error relativo porcentual de la variable y se almacena en un arreglo
-        err = abs((xi-xant)/xi)*100;
+        #Se calcula el error relativo de la variable y se almacena en un arreglo
+        err = abs((xi-xant)/xi);
         errors(j) = err;
         xant = xi;
+        fprintf('X%d = %.7f   Error Relativo: %.7f \n', j, xi, err);
       endfor
+      counter++;
     until(all(errors < tol));
-    solutions
+    #print results
+    disp("===========================");
+    disp("Solucion del sistema");
+    for i = 1:size(solutions,2)
+      fprintf("X%d = %.7f\n", i, solutions(i));
+    endfor
+    disp("===========================");
   else
     disp("-----------------------------------------------------")
     disp("La matriz es invalida por las siguientes razones:");
