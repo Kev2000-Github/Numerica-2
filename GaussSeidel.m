@@ -27,5 +27,15 @@ function GaussSeidel(matrix, independentTerms, initialValues, tol)
       endfor
     until(all(errors < tol));
     solutions
+  else
+    disp("-----------------------------------------------------")
+    disp("La matriz es invalida por las siguientes razones:");
+    if(!isDiagonalDominant)
+      disp("- No es diagonalmente dominante");
+    endif
+    if(!isSquare)
+      disp("- No es cuadrada");
+    endif
+    disp("-----------------------------------------------------")
   endif
 endfunction

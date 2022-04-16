@@ -31,5 +31,15 @@ function Jacobi(matrix, independentTerms, initialValues, tol)
     until(all(errors < tol));
     disp("Solution:");
     solutions
+  else
+    disp("-----------------------------------------------------")
+    disp("La matriz es invalida por las siguientes razones:");
+    if(!isDiagonalDominant)
+      disp("- No es diagonalmente dominante");
+    endif
+    if(!isSquare)
+      disp("- No es cuadrada");
+    endif
+    disp("-----------------------------------------------------")
   endif
 endfunction
