@@ -9,7 +9,7 @@ function GaussSeidel(matrix, independentTerms, initialValues, tol)
   if isDiagonalDominant && isSquare
     solutions = initialValues;
     errors = zeros(1,N);
-    #sigue iterando hasta que el error relativo porcentual de todas las variables sean menor que el provisto
+    #sigue iterando hasta que el error relativo de todas las variables sean menor que el provisto
     counter = 1;
     do
       fprintf("============< Iteracion %d >=============\n", counter);
@@ -29,9 +29,12 @@ function GaussSeidel(matrix, independentTerms, initialValues, tol)
         fprintf('X%d = %.7f   Error Relativo: %.7f \n', j, xi, err);
       endfor
       counter++;
-    until(all(errors < tol));
+    until(all(errors < tol) || counter > 150);
     #print results
     disp("===========================");
+    if(counter > 150)
+      disp("Se excedio el limite de 150 iteraciones")
+    endif
     disp("Solucion del sistema");
     for i = 1:size(solutions,2)
       fprintf("X%d = %.7f\n", i, solutions(i));
